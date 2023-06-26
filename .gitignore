@@ -4,4 +4,7 @@
 /.env
 
 # production
-/build
+*/build/*.o
+*/build/*.d
+*/build/*.map
+*/build/*.elf
