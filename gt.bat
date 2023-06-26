@@ -1,3 +1,3 @@
 git add .
-git commit -m "#автокомит"
+git commit -m "#autocommit"
 git push origin master
