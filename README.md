@@ -10,13 +10,10 @@
 
 Описание:
 
-```
+> Плату разработал [ХуторянинЪ](https://hutoryanin.ru/). GitHub репозиторий платы [Хуторино](https://github.com/ogneyar/Hutorino).
 
-Плату разработал [ХуторянинЪ](https://hutoryanin.ru/). GitHub репозиторий платы [Хуторино](https://github.com/ogneyar/Hutorino).
+> Это плата для тестирования / изучения МикроКонтроллера от WCH (WinChipHead).
 
-Это плата для тестирования / изучения МикроКонтроллера от WCH (WinChipHead).
-
-```
 
 Характеристики:
 
