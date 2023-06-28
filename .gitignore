@@ -1,8 +1,4 @@
 
-# dependencies
-/node_modules
-/.env
-
 # production
 */build/*.o
 */build/*.d
