@@ -4,9 +4,17 @@
 Git (необязательно)
 
 Make
+        путь до файла make.exe
+        \toolchain\Make\bin
 
 OpenOCD
+        путь до файла openocd.exe
+        \toolchain\OpenOCD\bin
 
 RISC-V Embedded GCC
+        путь до файлов GCC
+        \toolchain\RISC-V Embedded GCC\bin
 
 WCH-LinkUtility
+        необходимо установить драйвер для WCH-Link
+        \toolchain\WCH-LinkUtility\Drv_Link
