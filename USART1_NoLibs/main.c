@@ -1,4 +1,9 @@
 
+/*
+В этом примере в терминал выводится сообщение: "This is printf example", 
+используется первый USART, USART1_Tx находится на пине PA9
+*/
+
 #include <stdint.h>
 #include "main.h"
 #include "defines.h"
