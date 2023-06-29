@@ -1,6 +1,12 @@
 
 Зависимости от программ:
 
-Git
+Git (необязательно)
 
 Make
+
+OpenOCD
+
+RISC-V Embedded GCC
+
+WCH-LinkUtility
