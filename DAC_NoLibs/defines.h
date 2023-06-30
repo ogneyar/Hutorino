@@ -58,54 +58,119 @@ typedef struct
 // Universal Synchronous Asynchronous Receiver Transmitter
 typedef struct
 {
-  __IO uint16_t STATR;
-  uint16_t  RESERVED0;
-  __IO uint16_t DATAR;
-  uint16_t  RESERVED1;
-  __IO uint16_t BRR;
-  uint16_t  RESERVED2;
-  __IO uint16_t CTLR1;
-  uint16_t  RESERVED3;
-  __IO uint16_t CTLR2;
-  uint16_t  RESERVED4;
-  __IO uint16_t CTLR3;
-  uint16_t  RESERVED5;
-  __IO uint16_t GPR;
-  uint16_t  RESERVED6;
+    __IO uint16_t STATR;
+    uint16_t  RESERVED0;
+    __IO uint16_t DATAR;
+    uint16_t  RESERVED1;
+    __IO uint16_t BRR;
+    uint16_t  RESERVED2;
+    __IO uint16_t CTLR1;
+    uint16_t  RESERVED3;
+    __IO uint16_t CTLR2;
+    uint16_t  RESERVED4;
+    __IO uint16_t CTLR3;
+    uint16_t  RESERVED5;
+    __IO uint16_t GPR;
+    uint16_t  RESERVED6;
 } USART_TypeDef;
 
 // Digital to Analog Converter
 typedef struct
 {
-  __IO uint32_t CTLR;
-  __IO uint32_t SWTR;
-  __IO uint32_t R12BDHR1;
-  __IO uint32_t L12BDHR1;
-  __IO uint32_t R8BDHR1;
-  __IO uint32_t R12BDHR2;
-  __IO uint32_t L12BDHR2;
-  __IO uint32_t R8BDHR2;
-  __IO uint32_t RD12BDHR;
-  __IO uint32_t LD12BDHR;
-  __IO uint32_t RD8BDHR;
-  __IO uint32_t DOR1;
-  __IO uint32_t DOR2;
+    __IO uint32_t CTLR;
+    __IO uint32_t SWTR;
+    __IO uint32_t R12BDHR1;
+    __IO uint32_t L12BDHR1;
+    __IO uint32_t R8BDHR1;
+    __IO uint32_t R12BDHR2;
+    __IO uint32_t L12BDHR2;
+    __IO uint32_t R8BDHR2;
+    __IO uint32_t RD12BDHR;
+    __IO uint32_t LD12BDHR;
+    __IO uint32_t RD8BDHR;
+    __IO uint32_t DOR1;
+    __IO uint32_t DOR2;
 } DAC_TypeDef;
 
+// Inter Integrated Circuit Interface
+typedef struct
+{
+    __IO uint16_t CTLR1;
+    uint16_t  RESERVED0;
+    __IO uint16_t CTLR2;
+    uint16_t  RESERVED1;
+    __IO uint16_t OADDR1;
+    uint16_t  RESERVED2;
+    __IO uint16_t OADDR2;
+    uint16_t  RESERVED3;
+    __IO uint16_t DATAR;
+    uint16_t  RESERVED4;
+    __IO uint16_t STAR1;
+    uint16_t  RESERVED5;
+    __IO uint16_t STAR2;
+    uint16_t  RESERVED6;
+    __IO uint16_t CKCFGR;
+    uint16_t  RESERVED7;
+    __IO uint16_t RTR;
+    uint16_t  RESERVED8;
+} I2C_TypeDef;
+
+// Serial Peripheral Interface
+typedef struct
+{
+    __IO uint16_t CTLR1;
+    uint16_t  RESERVED0;
+    __IO uint16_t CTLR2;
+    uint16_t  RESERVED1;
+    __IO uint16_t STATR;
+    uint16_t  RESERVED2;
+    __IO uint16_t DATAR;
+    uint16_t  RESERVED3;
+    __IO uint16_t CRCR;
+    uint16_t  RESERVED4;
+    __IO uint16_t RCRCR;
+    uint16_t  RESERVED5;
+    __IO uint16_t TCRCR;
+    uint16_t  RESERVED6;
+    __IO uint16_t I2SCFGR;
+    uint16_t  RESERVED7;
+    __IO uint16_t I2SPR;
+    uint16_t  RESERVED8;
+    __IO uint16_t HSCR;
+    uint16_t  RESERVED9;
+} SPI_TypeDef;
 
 #define SET         1
 #define RESET       0
+
+#define ENABLE      1
+#define DISABLE     0
 
 #define LED_R       3 // PB3
 #define LED_G       4 // PB4
 #define LED_B       5 // PB5
 
-#define PA4         4
-#define PA9         9
+#define PA2         2 // 
+#define PA3         3 // 
+#define PA4         4 // DAC
+#define PA5         5 // SPI1 CLK
+#define PA6         6 // SPI1 MISO
+#define PA7         7 // SPI1 MOSI
+#define PA9         9 // Tx1
+
+#define PB3         3 // LED_R
+#define PB4         4 // LED_G
+#define PB5         5 // LED_B
+#define PB10       10 // SCK I2C2
+#define PB11       11 // SDA I2C2
 
 #define GPIO_Msk        0b1111
 #define GPIO_Speed_50   0b0011
-#define GPIO_AF_50      0b1011 // Alternate Functions (50Hz)
+#define GPIO_IN_FLOAT   0b0100
+#define GPIO_AF         0b1000 // Alternate Functions
+#define GPIO_AF_50      0b1011 // Alternate Functions with speed 50Hz
+#define GPIO_AF_OD      0b1100 // Alternate Functions
+#define GPIO_AF_OD_50   0b1111 // Alternate Functions with speed 50Hz
 #define GPIO_IPU        0b1000 // Input Pull Up
 
 // Peripheral memory map
@@ -113,32 +178,40 @@ typedef struct
 #define SRAM_BASE              ((uint32_t)0x20000000)
 #define PERIPH_BASE            ((uint32_t)0x40000000)
 
-#define APB1PERIPH_BASE        (PERIPH_BASE)
+#define APB1PERIPH_BASE        (PERIPH_BASE)                // 0x40000000
 #define APB2PERIPH_BASE        (PERIPH_BASE + 0x10000)      // 0x40010000
 #define AHBPERIPH_BASE         (PERIPH_BASE + 0x20000)      // 0x40020000
 
-#define DAC_BASE               (APB1PERIPH_BASE + 0x7400)
+#define I2C1_BASE              (APB1PERIPH_BASE + 0x5400)   // 0x40005400
+#define I2C2_BASE              (APB1PERIPH_BASE + 0x5800)   // 0x40005800
+#define DAC_BASE               (APB1PERIPH_BASE + 0x7400)   // 0x40007400
 
 #define GPIOA_BASE             (APB2PERIPH_BASE + 0x0800)   // 0x40010800
 #define GPIOB_BASE             (APB2PERIPH_BASE + 0x0C00)   // 0x40010C00
+#define SPI1_BASE              (APB2PERIPH_BASE + 0x3000)   // 0x40013000
 #define USART1_BASE            (APB2PERIPH_BASE + 0x3800)   // 0x40013800
+
 #define RCC_BASE               (AHBPERIPH_BASE + 0x1000)    // 0x40021000
 #define EXTEN_BASE             (AHBPERIPH_BASE + 0x3800)    // 0x40023800
 
 #define SysTick                ((SysTick_Type *) 0xE000F000)
 
+#define I2C2                   ((I2C_TypeDef *) I2C2_BASE)
 #define DAC                    ((DAC_TypeDef *) DAC_BASE)
 
 #define GPIOA                  ((GPIO_TypeDef *) GPIOA_BASE)
 #define GPIOB                  ((GPIO_TypeDef *) GPIOB_BASE)
+#define SPI1                   ((SPI_TypeDef *) SPI1_BASE)
 #define USART1                 ((USART_TypeDef *) USART1_BASE)
 #define RCC                    ((RCC_TypeDef *) RCC_BASE)
 #define EXTEN                  ((EXTEN_TypeDef *) EXTEN_BASE)
 
+#define RCC_APB1PCENR_I2C2EN   ((uint32_t)0x00400000) // (1 << 22)
 #define RCC_APB1PCENR_DACEN    ((uint32_t)0x20000000) // (1 << 29)
 
 #define RCC_APB2PCENR_IOPAEN   ((uint32_t)0x00000004) // (1 << 2)
 #define RCC_APB2PCENR_IOPBEN   ((uint32_t)0x00000008) // (1 << 3)
+#define RCC_APB2PCENR_SPI1EN   ((uint32_t)0x00001000) // (1 << 12)
 #define RCC_APB2PCENR_USART1EN ((uint32_t)0x00004000) // (1 << 14)
 
 #define EXTEN_PLL_HSI_PRE      ((uint32_t)0x00000010) // (1 << 4)
@@ -150,18 +223,21 @@ typedef struct
 #define RCC_PLLSRC             ((uint32_t)0x00010000) // PLL entry clock source
 #define RCC_PLLXTPRE           ((uint32_t)0x00020000) // HSE divider for PLL entry
 #define RCC_PLLMULL            ((uint32_t)0x003C0000) // PLLMUL[3:0] bits (PLL multiplication factor)
-#define RCC_PLLSRC_HSI_Div2    ((uint32_t)0x00000000) // HSI clock divided by 2 selected as PLL entry clock source
 #define RCC_PLLMULL6           ((uint32_t)0x00100000) // PLL input clock*6
+#define RCC_PLLMULL18          ((uint32_t)0x003C0000) // PLL input clock*18
+#define RCC_PLLSRC_HSI_Div2    ((uint32_t)0x00000000) // HSI clock divided by 2 selected as PLL entry clock source
 #define RCC_PLLON              ((uint32_t)0x01000000) // PLL enable
 #define RCC_PLLRDY             ((uint32_t)0x02000000) // PLL clock ready flag
 #define RCC_SW                 ((uint32_t)0x00000003) // SW[1:0] bits (System clock Switch)
 #define RCC_SW_PLL             ((uint32_t)0x00000002) // PLL selected as system clock
 #define RCC_SWS                ((uint32_t)0x0000000C) // SWS[1:0] bits (System Clock Switch Status)
 
+
 #define HSE_VALUE              ((uint32_t)8000000) // внешний осцилятор
 #define HSI_VALUE              ((uint32_t)8000000) // внутренний осцилятор
 
 #define SYSCLK_FREQ_48MHz_HSI  48000000
+#define SYSCLK_FREQ_144MHz_HSI 144000000
 
 
 #define CTLR1_UE_Set              ((uint16_t)0x2000) // USART Enable Mask
@@ -285,6 +361,73 @@ DAC
 #define DHR12R1_OFFSET     ((uint32_t)0x00000008)
 #define DHR12R2_OFFSET     ((uint32_t)0x00000014)
 #define DHR12RD_OFFSET     ((uint32_t)0x00000020)
+
+
+/*
+
+I2C
+
+*/
+
+#define READY       1
+#define NoREADY     0
+
+// I2C acknowledgement
+#define I2C_Ack_Enable           ((uint16_t)0x0400)
+#define I2C_Ack_Disable          ((uint16_t)0x0000)
+
+// I2C acknowledged address
+#define I2C_AcknowledgedAddress_7bit    ((uint16_t)0x4000)
+#define I2C_AcknowledgedAddress_10bit   ((uint16_t)0xC000)
+
+// I2C transfer direction
+#define I2C_Direction_Transmitter       ((uint8_t)0x00)
+#define I2C_Direction_Receiver          ((uint8_t)0x01)
+
+// I2C mode
+#define I2C_Mode_I2C             ((uint16_t)0x0000)
+#define I2C_Mode_SMBusDevice     ((uint16_t)0x0002)  
+#define I2C_Mode_SMBusHost       ((uint16_t)0x000A)
+
+// I2C flags
+#define I2C_FLAG_BUSY            ((uint32_t)0x00020000)
+
+// I2C events
+#define I2C_EVENT_MASTER_MODE_SELECT                ((uint32_t)0x00030001)  // BUSY, MSL and SB flag
+#define I2C_EVENT_MASTER_TRANSMITTER_MODE_SELECTED  ((uint32_t)0x00070082)  // BUSY, MSL, ADDR, TXE and TRA flags
+#define I2C_EVENT_MASTER_BYTE_TRANSMITTED           ((uint32_t)0x00070084)  // TRA, BUSY, MSL, TXE and BTF flags
+
+// I2C SPE mask
+#define CTLR1_PE_Set             ((uint16_t)0x0001)
+#define CTLR1_PE_Reset           ((uint16_t)0xFFFE)
+
+// I2C START mask
+#define CTLR1_START_Set          ((uint16_t)0x0100)
+#define CTLR1_START_Reset        ((uint16_t)0xFEFF)
+
+// I2C STOP mask
+#define CTLR1_STOP_Set           ((uint16_t)0x0200)
+#define CTLR1_STOP_Reset         ((uint16_t)0xFDFF)
+
+// I2C ACK mask
+#define CTLR1_ACK_Set            ((uint16_t)0x0400)
+#define CTLR1_ACK_Reset          ((uint16_t)0xFBFF)
+
+// I2C FREQ mask
+#define CTLR2_FREQ_Reset         ((uint16_t)0xFFC0)
+
+// I2C F/S mask
+#define CKCFGR_FS_Set            ((uint16_t)0x8000)
+
+// I2C CCR mask
+#define CKCFGR_CCR_Set           ((uint16_t)0x0FFF)
+
+// I2C ADD0 mask
+#define OADDR1_ADD0_Set          ((uint16_t)0x0001)
+#define OADDR1_ADD0_Reset        ((uint16_t)0xFFFE)
+
+// I2C FLAG mask
+#define FLAG_Mask                ((uint32_t)0x00FFFFFF)
 
 
 #endif /* __DEFINES_H_ */

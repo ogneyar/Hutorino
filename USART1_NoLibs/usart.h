@@ -5,6 +5,7 @@
 #include "stdio.h"
 #include <stdint.h>
 #include "defines.h"
+#include "system.h"
 
 // Список функций
 void USART1_Init(uint32_t baudrate);
@@ -13,10 +14,10 @@ uint16_t USART1_ReceiveData(void);
 uint8_t USART1_GetFlagStatus(uint16_t USART_FLAG);
 
 
-// Инициализация USART (при тактировании от внутреннего осцилятора и PLL = 6 => 48MHz)
+// Инициализация USART (при тактировании от внутреннего осцилятора и PLL = 6 => 48MHz или PLL = 18 => 144MHz)
 void USART1_Init(uint32_t baudrate)
 {
-    uint32_t apbclock = SYSCLK_FREQ_48MHz_HSI; // SYSCLK_Frequency = 48MHz; PCLK2_Frequency = 48MHz;
+    uint32_t apbclock = SYSCLK_FREQ; // PCLK2_Frequency (APB) == SYSCLK_Frequency
 
     uint32_t tmpreg = 0x00;
     uint32_t integerdivider = 0x00;
@@ -32,14 +33,14 @@ void USART1_Init(uint32_t baudrate)
     RCC->APB2PCENR |= RCC_APB2PCENR_USART1EN;
     
     USART1->CTLR1 &= CTLR1_CLEAR_Mask;
-    USART1->CTLR1 |= USART_WordLength_8b | USART_Parity_No;
+    // USART1->CTLR1 |= USART_WordLength_8b | USART_Parity_No;
     USART1->CTLR1 |= USART_Mode_Tx;
 
-    USART1->CTLR2 &= CTLR2_STOP_CLEAR_Mask;
-    USART1->CTLR2 |= USART_StopBits_1;
+    // USART1->CTLR2 &= CTLR2_STOP_CLEAR_Mask;
+    // USART1->CTLR2 |= USART_StopBits_1;
 
-    USART1->CTLR3 &= CTLR3_CLEAR_Mask;
-    USART1->CTLR3 |= USART_HardwareFlowControl_None;
+    // USART1->CTLR3 &= CTLR3_CLEAR_Mask;
+    // USART1->CTLR3 |= USART_HardwareFlowControl_None;
 
     integerdivider = ((25 * apbclock) / (4 * (baudrate)));
     tmpreg = (integerdivider / 100) << 4;
@@ -48,7 +49,7 @@ void USART1_Init(uint32_t baudrate)
 
     USART1->BRR = (uint16_t)tmpreg;
     
-    // включаем USART1
+    // USART1 ENABLE
     USART1->CTLR1 |= CTLR1_UE_Set;
 }
 
