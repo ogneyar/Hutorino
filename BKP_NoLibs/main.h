@@ -8,8 +8,7 @@
 int main(void);
 void GPIOB_Leds_Init(void);
 void Leds_Blink(uint16_t delay);
-void EXTI2_IRQHandler(void) __attribute__((interrupt("WCH-Interrupt-fast")));
-uint8_t EXTI_GetITStatusLine2(void);
+void TAMPER_IRQHandler(void) __attribute__((interrupt("WCH-Interrupt-fast")));
 
   
 __attribute__((interrupt("WCH-Interrupt-fast")))
